@@ -10,9 +10,10 @@
         $result .= $nome[sizeof($nome) -1][0];
         $resultado[$result]=$estados[$i];
     }
-    while ($nome_estados= current($resultado)) {
+    while ($nome_estados= current($resultado)) 
+    {
         echo key($resultado) ." - " . $nome_estados . "<br>";
         next($resultado);
     }
-
+    
 ?>
