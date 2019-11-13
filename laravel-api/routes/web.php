@@ -11,17 +11,3 @@
 |
 */
 
-Route::group(array('prefix' => 'api'), function()
-{
-
-  Route::get('/', function () {
-      return response()->json(['message' => 'Jobs API', 'status' => 'Connected']);;
-  });
-
-  Route::resource('estagiarios', 'EstagiariosController');
-
-});
-
-Route::get('/', function () {
-    return redirect('api');
-});

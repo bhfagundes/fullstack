@@ -11,54 +11,32 @@ class EstagiariosController extends Controller
     {
         $etagiarios=Estagiarios::all();
     }
-    public function show($id)
+    public function show(Estagiarios $estagiario)
     {
-        $estagiario = Estagiarios::find($id);
-
-        if(!$estagiario) 
-        {
-            return response()->json([
-                'message'   => 'Record not found',
-            ], 404);
-        }
-
-        return response()->json($estagiario);
+       return $estagiario;
     }
     public function store(Request $request)
     {
-        $estagiario = new Estagiario();
-        $estagiario->fill($request->all());
-        $estagiario->save();
-
+        $this->validate($request, [
+            'nome' => 'required|unique:estagiarios|max:255',
+            'email' => 'required',
+            'telefone' => 'required',
+            'data_nascimento' => 'required',
+            'price' => 'integer',
+            'availability' => 'boolean',
+        ]);
+        $estagiario = Estagiarios::create($request->all());
         return response()->json($estagiario, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, Estagiarios $estagiario)
     {
-        $estagiario = Estagiarios::find($id);
-
-        if(!$estagiario) 
-        {
-            return response()->json([
-                'message'   => 'Record not found',
-            ], 404);
-        }
-
-        $estagiario->fill($request->all());
-        $estagiario->save();
-
-        return response()->json($estagiario);
+        
+        $estagiario->update($request->all());
+        return response()->json($estagiario, 200);
     }
-    public function destroy($id)
+    public function destroy(Estagiarios $estagiario)
     {
-        $estagiario = Estagiarios::find($id);
-
-        if(!$estagiario) 
-        {
-            return response()->json([
-                'message'   => 'Record not found',
-            ], 404);
-        }
-
         $estagiario->delete();
+        return response()->json(null, 204);
     }
 }
